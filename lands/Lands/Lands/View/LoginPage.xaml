@@ -1,25 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lands.View.LoginPage">
+             x:Class="Lands.View.LoginPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Login">
+ 
+    
     <ContentPage.Content>
-        <StackLayout Padding="10,20,10,5">
-            <Label Text="Lands" FontSize="Large" 
+        <ScrollView>
+            <StackLayout Padding="10,20,10,5">
+                <Label Text="Lands" FontSize="Large" 
                    FontAttributes="Bold"
                HorizontalOptions="Center" />
-            <Image Source="onu"
+                <Image Source="onu"
                    WidthRequest="200"/>
-            
-            <Label Text="E-mail"  />
-            <Entry Placeholder="Enter your email"
-                   Keyboard="Email"/>
-            <Label Text="Password"  />
-            <Entry Placeholder="Enter your Password"
+                <Grid 
+                    Margin="0,20 ">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="E-mail"  
+                       Grid.Row="0" Grid.Column="0"
+                       VerticalOptions="Center" />
+                    <Entry Placeholder="Enter your email"
+                   Keyboard="Email"
+                       Grid.Row="0" Grid.Column="1"/>
+                    <Label Text="Password"  
+                       Grid.Row="1" Grid.Column="0"
+                       VerticalOptions="Center" />
+                    <Entry Placeholder="Enter your Password"
+                       Grid.Row="1" Grid.Column="1"
                    IsPassword="True"/>
-            <ActivityIndicator />
-            <Button Text="Login" TextColor="White"
+                </Grid>
+                <!--inicio-->
+                <ActivityIndicator />
+                <!--fin -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Remenber on the device" 
+                       VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                    <Switch  VerticalOptions="End" />
+                </StackLayout>
+                <Label Text="Forgot your password?" 
+                       HorizontalOptions="Center"
+                       TextColor="Blue"/>
+
+
+                <StackLayout Margin="40,0">
+                    <Button Text="Login" TextColor="White"
                     BackgroundColor="Navy" 
-                    BorderRadius="23"/>
-        </StackLayout>
+                    BorderRadius="23"
+                        HeightRequest="46"/>
+                    <Button Text="register" TextColor="White"
+                    BackgroundColor="Purple" 
+                    BorderRadius="23"
+                        HeightRequest="46"/>
+                </StackLayout>
+                <StackLayout 
+                HorizontalOptions="Center"
+                Orientation="Horizontal">
+                    <Image Source="facebook_logo" />
+                    <Image Source="twitter_logo" />
+                    <Image Source="instagram_logo" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
