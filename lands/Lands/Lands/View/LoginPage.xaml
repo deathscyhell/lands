@@ -25,7 +25,7 @@
                     <Entry Placeholder="Enter your email"
                    Keyboard="Email"
                        Grid.Row="0" Grid.Column="1"
-                           Text="{Binding email, Mode=TwoWay}"/>
+                           Text="{Binding Email, Mode=TwoWay}"/>
                     <Label Text="Password"  
                        Grid.Row="1" Grid.Column="0"
                        VerticalOptions="Center" />
@@ -55,17 +55,21 @@
                 <StackLayout Margin="40,0"
                              Orientation="Horizontal"
                              VerticalOptions="CenterAndExpand">
-                    <Button Text="Login" TextColor="White"
+                    <Button 
+                        Text="Login"
+                            TextColor="White"
                     BackgroundColor="Navy" 
                     BorderRadius="23"
                     HeightRequest="46"
                     HorizontalOptions="FillAndExpand"
-                            Command="{Binding LoginCommand}"/>
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"        
+                    Command="{Binding LoginCommand}"/>
                     <Button Text="register" TextColor="White"
                     BackgroundColor="Purple" 
                     BorderRadius="23"
                     HorizontalOptions="FillAndExpand"
-                    HeightRequest="46"/>
+                    HeightRequest="46"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"  />
                 </StackLayout>
                 <StackLayout 
                     VerticalOptions="EndAndExpand"
