@@ -8,9 +8,42 @@
         <StackLayout
             BindingContext="{Binding Lands}"
             Padding="5">
-            <Label Text="Lands"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <SearchBar Placeholder="Search ..."
+                       Text="{Binding Filter, Mode=TwoWay}"
+                       SearchCommand="{Binding SearchCommand}"/>
+            <ListView 
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                ItemsSource="{Binding Lands}"
+                RefreshCommand="{Binding RefreshCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0"
+                                             VerticalOptions="Center">
+                                    <Label FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           Text="{Binding Name}"
+                                           TextColor="Black">
+                                        
+                                    </Label>
+                                    <Label Text="{Binding Capital}"
+                                           TextColor="Black"/>
+                                </StackLayout>
+                                <Image Grid.Column="1"
+                                       HorizontalOptions="End"
+                                       Source="chevright"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

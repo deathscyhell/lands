@@ -13,7 +13,7 @@ namespace Lands.Services
 
     public class ApiService
     {
-      /*  public async Task<Response> CheckConnection()
+        public async Task<Response> CheckConnection()
         {
            if (!CrossConnectivity.Current.IsConnected)
             {
@@ -42,7 +42,7 @@ namespace Lands.Services
                 IsSuccess = true,
                 Message = "ok",
             };
-        }*/
+        } 
 
         public async Task<Response> GetList<T>(
             string urlBase,
