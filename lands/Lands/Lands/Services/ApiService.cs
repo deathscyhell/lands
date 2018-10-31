@@ -43,7 +43,7 @@ namespace Lands.Services
                 Message = "ok",
             };
         } 
-
+        //obtener el link mediante 3 parametros.
         public async Task<Response> GetList<T>(
             string urlBase,
             string servicePrefix,

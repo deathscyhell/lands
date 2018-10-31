@@ -98,6 +98,9 @@ namespace Lands.ViewModel
             }
             else
             {
+                //llamamos la libreria using linq para utilizar el Where. lo que hacemos es filtrar
+                //el resultadoprimero por nombre convirtiendo los dos en minuscula y la segunda busqueda 
+                //por medio de letras es decir al escribir una letra que aparezca resutlado y al eliminarla que aparezca otros.
                 this.Lands = new ObservableCollection<Land>(
                 this.landList.Where(l => l.Name.ToLower().Contains(this.Filter.ToLower()) ||
                 l.Capital.ToLower().Contains(this.Filter.ToLower()) ));
@@ -109,6 +112,7 @@ namespace Lands.ViewModel
         public ICommand RefreshCommand {
             get
             {
+                //el relay es por medio de unp lugin
                 return new RelayCommand(LoadLands);
             } 
         }
