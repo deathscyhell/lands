@@ -19,14 +19,14 @@ namespace Lands.ViewModel
         #endregion
 
         #region Atributes
-        private ObservableCollection<Land> lands;
+        private ObservableCollection<LandItemViewModel> lands;
         private bool isRefreshing;
         private string filter;
         private List<Land> landList;
         #endregion
 
         #region Propeties
-        public ObservableCollection<Land> Lands
+        public ObservableCollection<LandItemViewModel> Lands
         {
             get { return this.lands;  }
             set { SetValue(ref this.lands, value); }
@@ -61,6 +61,7 @@ namespace Lands.ViewModel
         {
             this.IsRefreshing = true;
             var connetion = await this.apiService.CheckConnection();
+
             if (!connetion.IsSuccess)
             {
                 this.IsRefreshing = false;
@@ -76,36 +77,47 @@ namespace Lands.ViewModel
                 "http://restcountries.eu",
                 "/rest",
                 "/v2/all");
-            //if (response.IsSuccess)
-            //{
-            //    await Application.Current.MainPage.DisplayAlert(
-            //        "todo bien",
-            //        response.Message,
-            //        "Aeptar");
-            //    return;
-            //}
-           this.landList = (List<Land>)response.Result;
-            this.Lands = new ObservableCollection<Land>(this.landList);
+
+            if (!response.IsSuccess)
+            {
+                this.IsRefreshing = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "todo bien",
+                    response.Message,
+                    "Aceptar");
+                await Application.Current.MainPage.Navigation.PopAsync();
+                return;
+            }
+
+            this.landList = (List<Land>)response.Result;
+            this.Lands = new ObservableCollection<LandItemViewModel>(
+                this.ToLandItemViewModel());
             this.IsRefreshing = false;
+
+
         }
+
+
 
         private void Search()
         {
             if (string.IsNullOrEmpty(this.Filter))
             {
-                this.Lands = new ObservableCollection<Land>(
-                    this.landList);
+                this.Lands = new ObservableCollection<LandItemViewModel>(
+                this.ToLandItemViewModel());
             }
             else
             {
                 //llamamos la libreria using linq para utilizar el Where. lo que hacemos es filtrar
                 //el resultadoprimero por nombre convirtiendo los dos en minuscula y la segunda busqueda 
                 //por medio de letras es decir al escribir una letra que aparezca resutlado y al eliminarla que aparezca otros.
-                this.Lands = new ObservableCollection<Land>(
-                this.landList.Where(l => l.Name.ToLower().Contains(this.Filter.ToLower()) ||
+                this.Lands = new ObservableCollection<LandItemViewModel>(
+                this.ToLandItemViewModel().Where(l => l.Name.ToLower().Contains(this.Filter.ToLower()) ||
                 l.Capital.ToLower().Contains(this.Filter.ToLower()) ));
             }
         }
+
+        
         #endregion
 
         #region Command
@@ -125,7 +137,40 @@ namespace Lands.ViewModel
             }
         }
 
-       
+
+        #endregion
+        #region Mwthods
+        private IEnumerable<LandItemViewModel> ToLandItemViewModel()
+        {
+            return this.landList.Select(l => new LandItemViewModel
+            {
+                Alpha2Code = l.Alpha2Code,
+                Alpha3Code = l.Alpha3Code,
+                AltSpellings = l.AltSpellings,
+                Area = l.Area,
+                Borders = l.Borders,
+                CallingCodes = l.CallingCodes,
+                Capital = l.Capital,
+                Cioc = l.Cioc,
+                Currencies = l.Currencies,
+                Demonym = l.Demonym,
+                Flag = l.Flag,
+                Gini = l.Gini,
+                Languages = l.Languages,
+                Latlng = l.Latlng,
+                Name = l.Name,
+                NativeName = l.NativeName,
+                NumericCode = l.NumericCode,
+                Population = l.Population,
+                Region = l.Region,
+                RegionalBlocs = l.RegionalBlocs,
+                Subregion = l.Subregion,
+                Timezones = l.Timezones,
+                TopLevelDomain = l.TopLevelDomain,
+                Translations = l.Translations,
+
+            });
+        }
         #endregion
     }
 }
