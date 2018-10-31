@@ -175,4 +175,19 @@
   <ItemGroup>
     <BundleResource Include="Resources\chevright.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_currency.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_lenguages.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_translate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_bordes.png" />
+  </ItemGroup>
 </Project>
