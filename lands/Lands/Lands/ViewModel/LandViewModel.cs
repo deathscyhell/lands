@@ -10,7 +10,9 @@ namespace Lands.ViewModel
     public class LandViewModel :BaseViewModel
     {
         #region Atributes
-        private ObservableCollection<Border> bordes; 
+        private ObservableCollection<Border> bordes;
+        private ObservableCollection<Currency> currencies;
+        private ObservableCollection<Language> language;
         #endregion
 
 
@@ -20,10 +22,23 @@ namespace Lands.ViewModel
             get;
             set;
         }
+        //para la pagina Border
         public ObservableCollection<Border> Bordes
         {
             get { return this.bordes; }
             set { this.SetValue(ref this.bordes,value); }
+        }
+        //para la pagina currency
+        public ObservableCollection<Currency> Currencies
+        {
+            get { return this.currencies; }
+            set { this.SetValue(ref this.currencies, value); }
+        }
+
+        public ObservableCollection<Language> Language
+        {
+            get { return this.language; }
+            set { this.SetValue(ref this.language, value); }
         }
         #endregion
 
@@ -32,6 +47,8 @@ namespace Lands.ViewModel
         {
             this.Land = land;
             this.LoadBorders();
+            this.Currencies = new ObservableCollection<Currency>(this.Land.Currencies);
+            this.Language = new ObservableCollection<Language>(this.Land.Languages);
         }
 
 
