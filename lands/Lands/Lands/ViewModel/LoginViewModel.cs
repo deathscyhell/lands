@@ -6,13 +6,16 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using Xamarin.Forms;
+    using Services;
 
     public class LoginViewModel : BaseViewModel
     {
-        
+        #region Servicies
+        private ApiService apiService;
+        #endregion
 
         #region Atributes
-       private string email;
+        private string email;
         private string password;
         private bool isRunning;
         private bool isEnabled;
@@ -75,12 +78,12 @@
         #region Constructor
         public LoginViewModel()
         {
-            this.IsRemembered = true;
-         this.IsEnabled = true ;
+           this.IsRemembered = true;
+           this.IsEnabled = true ;
 
+           this.apiService = new ApiService();
 
-            this.Email = "w";
-            this.Password = "123";
+            
         }
         #endregion
 
@@ -100,37 +103,67 @@
         {
             if (string.IsNullOrEmpty(this.Email))
             {
-                
+
                 await Application.Current.MainPage.DisplayAlert(
                     "Error ",
                     "You must enter an email ",
                     "Accept ");
                 return;
             }
-            
+
             if (string.IsNullOrEmpty(this.Password))
             {
-                
+
                 await Application.Current.MainPage.DisplayAlert(
                     "Error ",
                     "You must enter an password ",
                     "Accept ");
-                
+
                 return;
             }
             this.IsRunning = true;
             this.IsEnabled = false;
-            if (this.Email != "w" || this.Password != "123")
+
+            //
+            var connetion = await this.apiService.CheckConnection();
+            if (!connetion.IsSuccess)
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
+
                 await Application.Current.MainPage.DisplayAlert(
-                   "ok ",
-                   "email or password incorrent ",
+                   "Error ",
+                   connetion.Message,
                    "Accept ");
-                this.Password = string.Empty;
+
                 return;
             }
+
+            var token = await this.apiService.GetToken(
+               "http://landsapi1.azurewebsites.net",
+               this.Email,
+               this.Password);
+
+
+            if (token == null)
+            {
+
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                   "Error ",
+                   "something was wrong, please try later",
+                   "Accept ");
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(token.))
+            {
+
+            }
+        
+            //
             this.IsRunning = false;
             this.IsEnabled = true;
 
