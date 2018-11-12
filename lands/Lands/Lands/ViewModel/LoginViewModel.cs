@@ -7,6 +7,7 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Services;
+    
 
     public class LoginViewModel : BaseViewModel
     {
@@ -83,7 +84,8 @@
 
            this.apiService = new ApiService();
 
-            
+            this.Email = "w@gmail.com";
+            this.Password = "123456";
         }
         #endregion
 
@@ -126,6 +128,7 @@
 
             //
             var connetion = await this.apiService.CheckConnection();
+
             if (!connetion.IsSuccess)
             {
                 this.IsRunning = false;
@@ -140,7 +143,7 @@
             }
 
             var token = await this.apiService.GetToken(
-               "http://landsapi1.azurewebsites.net",
+               "http://localhost:60496",
                this.Email,
                this.Password);
 
@@ -158,20 +161,33 @@
                 return;
             }
 
-            if (string.IsNullOrEmpty(token.))
+            if (string.IsNullOrEmpty(token.AccessToken))
             {
-
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                   "Error ",
+                   token.ErrorDescription,
+                   "Accept ");
+                this.password = string.Empty;
+                return;
             }
         
+           
+            var mainViewModel =  MainViewModel.GetInstance();
+            mainViewModel.Token = token;
+             mainViewModel.Lands = new LandsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
+
             //
             this.IsRunning = false;
             this.IsEnabled = true;
 
+
             this.Email = string.Empty;
             this.Password = string.Empty;
 
-            MainViewModel.GetInstance().Lands = new LandsViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
+         
         }
 
         #endregion
