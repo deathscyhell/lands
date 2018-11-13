@@ -1,10 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lands.View.LandPage"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Icon="ic_information"
-             Title="Information">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Lands.View.LandPage"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    Icon="ic_information"
+    Title="Information">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ffimageloadingsvg:SvgImageSourceConverter x:Key="SvgImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
 
     <ContentPage.Content>
         <ScrollView 
@@ -18,8 +29,11 @@
                     Text="{Binding Land.Name}"
                     TextColor="Black">
                 </Label>
-              
-                <Grid>
+                <ffimageloading:CachedImage 
+                    Source="{Binding Land.Flag, Converter={StaticResource SvgImageSourceConverter}}">
+                </ffimageloading:CachedImage>
+                
+                    <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>

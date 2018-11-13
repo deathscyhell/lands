@@ -3,8 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lands.View.LandsPage"
               BindingContext="{Binding Main, Source={StaticResource Locator}}"
+            xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              BackgroundColor="Silver"
              Title="Lands">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ffimageloadingsvg:SvgImageSourceConverter x:Key="SvgImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Lands}">
@@ -31,10 +41,17 @@
                                 </Frame.GestureRecognizers>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <StackLayout Grid.Column="0"
+
+                                    <ffimageloading:CachedImage 
+                                        Grid.Column="0" HeightRequest="30" WidthRequest="60"
+                                        Source="{Binding Flag, Converter={StaticResource SvgImageSourceConverter}}">
+                                    </ffimageloading:CachedImage>
+
+                                    <StackLayout Grid.Column="1"
                                              VerticalOptions="Center">
                                         <Label FontAttributes="Bold"
                                            FontSize="Medium"
@@ -45,7 +62,7 @@
                                         <Label Text="{Binding Capital}"
                                            TextColor="Black"/>
                                     </StackLayout>
-                                    <Image Grid.Column="1"
+                                    <Image Grid.Column="2"
                                        HorizontalOptions="End"
                                        Source="chevright"/>
                                 </Grid>
